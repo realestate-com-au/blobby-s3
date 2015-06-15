@@ -17,9 +17,10 @@ module Blobby
     # to the first bucket, and asynchronously to the rest.
     #
     # bucket_names - name of bucket(s) to store things in
+    # object_acl   - a canned access control policy
     # s3_options   - options passed to AWS::S3.new
     #
-    def initialize(bucket_names, s3_options = {}, logger = nil, object_acl = :public_read)
+    def initialize(bucket_names, object_acl = :private, logger = nil, s3_options = {})
       @bucket_names = Array(bucket_names).map(&:to_str)
       @s3_options = s3_options.dup
       @s3_options.freeze
