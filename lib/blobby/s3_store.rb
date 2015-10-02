@@ -43,7 +43,7 @@ module Blobby
         s3_object.exists?
       end
 
-      def read(&block)
+      def read
         return nil unless s3_object.exists?
         body = s3_object.get.body
         if block_given?
