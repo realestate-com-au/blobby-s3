@@ -1,6 +1,6 @@
 # Blobby::S3Store
 
-This gem provides an S3-based implementation of the "store" interface defined by the "blobby" gem.  It's been packaged separately, to avoid adding dependencies to the core gem.
+This gem provides an S3-based implementation of the "store" interface defined by the ["blobby"](https://github.com/realestate-com-au/blobby) gem.  It's been packaged separately, to avoid adding dependencies to the core gem.
 
 The simplest use-case is writing to a single bucket:
 
