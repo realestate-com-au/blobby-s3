@@ -8,7 +8,7 @@ Gem::Specification.new do |gem|
   gem.homepage      = "https://github.com/realestate-com.au/blobby-s3"
 
   gem.name          = "blobby-s3"
-  gem.version       = "1.0.0-alpha"
+  gem.version       = "1.0.0"
 
   gem.files         = `git ls-files`.split($OUTPUT_RECORD_SEPARATOR)
   gem.executables   = gem.files.grep(%r{^bin/}).map { |f| File.basename(f) }
