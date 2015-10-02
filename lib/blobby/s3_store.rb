@@ -1,5 +1,4 @@
 require "aws-sdk-resources"
-require "forwardable"
 require "blobby/key_constraint"
 
 module Blobby
