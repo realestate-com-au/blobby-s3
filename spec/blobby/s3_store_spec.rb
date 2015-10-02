@@ -9,15 +9,15 @@ require "blobby/store_behaviour"
 
 describe Blobby::S3Store, :integration => true do
 
+  before(:all) do
+    unless ENV.key?("AWS_ACCESS_KEY_ID")
+      fail "No AWS credentials provided"
+    end
+  end
+
   context "with a writable bucket" do
 
     EXISTING_BUCKET_NAME = "fake-aws-sdk-s3-test"
-
-    before(:all) do
-      unless ENV.key?("AWS_ACCESS_KEY_ID")
-        fail "No AWS credentials provided"
-      end
-    end
 
     let(:s3_resource) { Aws::S3::Resource.new(:region => "us-east-1")}
     let(:bucket) { s3_resource.bucket(EXISTING_BUCKET_NAME) }
@@ -81,16 +81,16 @@ describe Blobby::S3Store, :integration => true do
 
   end
 
-  # context "when the bucket does not exist" do
-  #
-  #   before do
-  #     allow(bucket.objects).to receive(:first) do
-  #       fail ::AWS::S3::Errors::NoSuchBucket, "urk!"
-  #     end
-  #   end
-  #
-  #   it { is_expected.not_to be_available }
-  #
-  # end
+  context "when the bucket does not exist" do
+
+    BOGUS_BUCKET_NAME = "bogusmcbogusness"
+
+    subject do
+      described_class.new(BOGUS_BUCKET_NAME)
+    end
+
+    it { is_expected.not_to be_available }
+
+  end
 
 end
