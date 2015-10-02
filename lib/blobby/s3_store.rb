@@ -44,7 +44,6 @@ module Blobby
       end
 
       def read
-        return nil unless s3_object.exists?
         body = s3_object.get.body
         if block_given?
           body.each_line do |line|
@@ -54,6 +53,8 @@ module Blobby
         else
           force_binary(body.read)
         end
+      rescue Aws::S3::Errors::NoSuchKey
+        nil
       end
 
       def write(payload)
