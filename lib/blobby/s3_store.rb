@@ -44,14 +44,13 @@ module Blobby
       end
 
       def read
-        body = s3_object.get.body
         if block_given?
-          body.each_line do |line|
-            yield force_binary(line)
+          s3_object.get do |chunk|
+            yield force_binary(chunk)
           end
           nil
         else
-          force_binary(body.read)
+          force_binary(s3_object.get.body.read)
         end
       rescue Aws::S3::Errors::NoSuchKey
         nil
