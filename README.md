@@ -6,7 +6,7 @@ This gem provides an S3-based implementation of the "store" interface defined by
 
 The simplest use-case is writing to a single bucket:
 
-    s3_store = Blobby::S3Store.new("mybucket")
+    s3_store = Blobby.store("s3://mybucket")
     s3_store["key"].write("something big")
 
 Credentials can be provided, if required:

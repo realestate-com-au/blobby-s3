@@ -1,4 +1,4 @@
-## 1.1.0 (PENDING)
+## 1.1.0 (2016-05-22)
 
 * Add support for streaming reads.
 * Implement `Blobby.store("s3://bucket/prefix")`
