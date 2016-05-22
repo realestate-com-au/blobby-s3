@@ -1,0 +1,9 @@
+language: ruby
+rvm:
+- 2.2.2
+env:
+  global:
+    - AWS_DEFAULT_REGION=us-east-1
+    - BLOBBY_S3_TEST_BUCKET=fake-aws-sdk-s3-test
+    - AWS_ACCESS_KEY_ID=AKIAJ6LW4DFV3RH4Z6OQ
+    - secure: RozEwNe8txMO8jqo/hFWnusfiUSpvz2yN6bDe1G/8bW3pOmjYT319qL5jAIHBxQFohHpUsJMxwsjS07yNq1rlBDuiDJsNnZW6RGzOuVTztaxgjeauo8X4vV3PkZU6Ln0qoYPQiCsIwQfczBpno2Eor0E1BuOXcZGtHsFoQQxWiBG9RkCelGx+ZeMuP/v8EuV4Fd5YOJgzTqWGuaFXEONqeeTVmUoObltJnPCcdpYMzI/+Wn2/dU2gnpRxTJHGrgmVKRWn/M0I7aIEQ9FeJuPVahcdkCPHfzoceTySdl/YVMcjsu6PsHPAQywo6qo4MShV/VI0cUw6hWOf9X9tzdZamyKnaeY1EaIw0C/sZ2dn7dsbRzIn9ls+mI2y32khMX/AG8hze2udKhq3Ai1gREYjo0vvU6q/i2DAoDETaP/Ig3qJshzz1XntBx9NAGkzad3xbkRB9p/e60pfB9E4ZxZG+OSkUi7AGu68ZlI2ceSus46QkG6ya9FNUnJTQEuaUvrg7EASiuKBjQia8Ce9GwzujAxZWVRwWDjvTg3Wo5oGxfVmHWEleVVTFtuuvkroChyetgr/1iLXOigvssHRYFPlDhWKH/bJ9gjyYequEJxoBREwW/Qe3u4kCGgR0vz0CWcVP9RRejTm4RDUpmcreun423WTmq5UWmb9Pj5Fd1f3wM=
