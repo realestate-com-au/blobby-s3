@@ -1,11 +1,24 @@
 require "aws-sdk-resources"
-require "blobby/key_constraint"
+require "blobby"
+require "blobby/key_transforming_store"
+require "uri"
 
 module Blobby
 
   # A BLOB store backed by an S3 bucket.
   #
   class S3Store
+
+    def self.from_uri(uri)
+      uri = URI(uri)
+      bucket_name = uri.host
+      prefix = uri.path.sub(%r{\A/}, "").sub(%r{/\Z}, "")
+      store = new(bucket_name)
+      unless prefix.empty?
+        store = KeyTransformingStore.new(store) { |key| prefix + "/" + key }
+      end
+      store
+    end
 
     # Create a new instance.
     #
@@ -108,5 +121,7 @@ module Blobby
     end
 
   end
+
+  register_store_factory "s3", S3Store
 
 end

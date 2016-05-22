@@ -7,6 +7,42 @@ $LOAD_PATH << Gem.loaded_specs["blobby"].full_gem_path + "/spec"
 
 require "blobby/store_behaviour"
 
+describe Blobby::S3Store do
+
+  describe ".from_uri" do
+
+    context "with s3://bucket" do
+
+      let(:store) { described_class.from_uri("s3://bucket") }
+
+      it "creates an S3Store" do
+        expect(store).to be_a(described_class)
+      end
+
+      it "maps objects to the specified bucket" do
+        expect(store["object"].send(:s3_object).bucket.name).to eql("bucket")
+      end
+
+      it "maps objects with the specified names" do
+        expect(store["object"].send(:s3_object).key).to eql("object")
+      end
+
+    end
+
+    context "with s3://bucket/prefix/" do
+
+      let(:store) { described_class.from_uri("s3://bucket/prefix/") }
+
+      it "maps objects with the specified prefix" do
+        expect(store["object"].send(:s3_object).key).to eql("prefix/object")
+      end
+
+    end
+
+  end
+
+end
+
 describe Blobby::S3Store, :integration => true do
 
   before(:all) do

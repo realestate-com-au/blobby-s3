@@ -16,6 +16,6 @@ Gem::Specification.new do |gem|
   gem.require_paths = ["lib"]
 
   gem.add_runtime_dependency("aws-sdk-resources", "~> 2.1")
-  gem.add_runtime_dependency("blobby")
+  gem.add_runtime_dependency("blobby", "~> 1.1.0")
 
 end
