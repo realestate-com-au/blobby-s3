@@ -11,8 +11,10 @@ module Blobby
 
     def self.from_uri(uri)
       uri = URI(uri)
+      raise ArgumentError, "invalid S3 address: #{uri}" unless uri.scheme == "s3"
       bucket_name = uri.host
       prefix = uri.path.sub(%r{\A/}, "").sub(%r{/\Z}, "")
+      raise ArgumentError, "no bucket specified" if bucket_name.nil?
       store = new(bucket_name)
       unless prefix.empty?
         store = KeyTransformingStore.new(store) { |key| prefix + "/" + key }

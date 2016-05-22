@@ -39,6 +39,26 @@ describe Blobby::S3Store do
 
     end
 
+    context "with non-S3 uri" do
+
+      it "raises ArgumentError" do
+        expect {
+          described_class.from_uri("http://bucket")
+        }.to raise_error(ArgumentError)
+      end
+
+    end
+
+    context "without a bucket" do
+
+      it "raises ArgumentError" do
+        expect {
+          described_class.from_uri("s3://")
+        }.to raise_error(ArgumentError)
+      end
+
+    end
+
   end
 
 end
