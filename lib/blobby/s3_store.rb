@@ -97,7 +97,7 @@ module Blobby
     private
 
     def s3_client
-      ::Aws::S3::Client.new(s3_options)
+      @s3_client ||= ::Aws::S3::Client.new(s3_options)
     end
 
     def s3_endpoint_for_bucket
