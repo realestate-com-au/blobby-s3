@@ -9,6 +9,14 @@ require "blobby/store_behaviour"
 
 describe Blobby::S3Store do
 
+  before(:all) do
+    Aws.config[:s3] = {
+      stub_responses: {
+        get_bucket_location: { location_constraint: "ap-southeast-2" }
+      }
+    }
+  end
+
   describe ".from_uri" do
 
     context "with s3://bucket" do
