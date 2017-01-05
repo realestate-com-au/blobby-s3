@@ -22,6 +22,12 @@ module Blobby
       store
     end
 
+    def self.bucket_region(bucket_name, s3_options = {})
+      s3_client = Aws::S3::Client.new(s3_options)
+      result = s3_client.get_bucket_location(:bucket => bucket_name)
+      result ? result.location_constraint : "us-east-1"
+    end
+
     # Create a new instance.
     #
     # bucket_name  - name of the bucket to store things in
@@ -29,8 +35,7 @@ module Blobby
     #
     def initialize(bucket_name, s3_options = {})
       @bucket_name = bucket_name.to_str
-      @s3_options = s3_options.dup
-      @s3_options[:endpoint] = s3_endpoint_for_bucket
+      @s3_options = s3_options
     end
 
     attr_reader :bucket_name
@@ -96,26 +101,12 @@ module Blobby
 
     private
 
-    def s3_client
-      ::Aws::S3::Client.new(s3_options)
-    end
-
-    def s3_endpoint_for_bucket
-      location = s3_client.get_bucket_location(:bucket => bucket_name).location_constraint
-      case location
-      when ""
-        "https://s3.amazonaws.com"
-      when "EU"
-        "https://s3-eu-west-1.amazonaws.com"
-      else
-        "https://s3-#{location}.amazonaws.com"
-      end
-    rescue ::Aws::Errors::ServiceError
-      "https://s3.amazonaws.com"
+    def bucket_region
+      @bucket_region ||= S3Store.bucket_region(bucket_name, s3_options)
     end
 
     def s3_resource
-      ::Aws::S3::Resource.new(s3_options)
+      ::Aws::S3::Resource.new(s3_options.merge(:region => bucket_region))
     end
 
     def bucket

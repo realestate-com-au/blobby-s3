@@ -9,6 +9,10 @@ require "blobby/store_behaviour"
 
 describe Blobby::S3Store do
 
+  before do
+    allow(Blobby::S3Store).to receive(:bucket_region).and_return("us-east-1")
+  end
+
   describe ".from_uri" do
 
     context "with s3://bucket" do
@@ -76,9 +80,7 @@ describe Blobby::S3Store, :integration => true do
     EXISTING_BUCKET_NAME = ENV.fetch("BLOBBY_S3_TEST_BUCKET", "blobby-s3-test-ap-southeast-1")
 
     let(:bucket_region) do
-      s3_client = Aws::S3::Client.new
-      result = s3_client.get_bucket_location(:bucket => EXISTING_BUCKET_NAME)
-      result ? result.location_constraint : "us-east-1"
+      Blobby::S3Store.bucket_region(EXISTING_BUCKET_NAME)
     end
 
     let(:s3_resource) { Aws::S3::Resource.new(:region => bucket_region)}
