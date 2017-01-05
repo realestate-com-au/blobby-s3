@@ -83,7 +83,7 @@ describe Blobby::S3Store, :integration => true do
       Blobby::S3Store.bucket_region(EXISTING_BUCKET_NAME)
     end
 
-    let(:s3_resource) { Aws::S3::Resource.new(:region => bucket_region)}
+    let(:s3_resource) { Aws::S3::Resource.new(:region => bucket_region) }
     let(:bucket) { s3_resource.bucket(EXISTING_BUCKET_NAME) }
 
     before do
