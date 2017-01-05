@@ -73,9 +73,15 @@ describe Blobby::S3Store, :integration => true do
 
   context "with a writable bucket" do
 
-    EXISTING_BUCKET_NAME = ENV.fetch("BLOBBY_S3_TEST_BUCKET", "fake-aws-sdk-s3-test")
+    EXISTING_BUCKET_NAME = ENV.fetch("BLOBBY_S3_TEST_BUCKET", "blobby-s3-test-ap-southeast-1")
 
-    let(:s3_resource) { Aws::S3::Resource.new(:region => "us-east-1")}
+    let(:bucket_region) do
+      s3_client = Aws::S3::Client.new
+      result = s3_client.get_bucket_location(:bucket => EXISTING_BUCKET_NAME)
+      result ? result.location_constraint : "us-east-1"
+    end
+
+    let(:s3_resource) { Aws::S3::Resource.new(:region => bucket_region)}
     let(:bucket) { s3_resource.bucket(EXISTING_BUCKET_NAME) }
 
     before do
