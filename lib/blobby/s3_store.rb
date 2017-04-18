@@ -76,8 +76,19 @@ module Blobby
         nil
       end
 
-      def write(payload)
-        s3_object.put(:body => force_binary(payload))
+      # Write to the bucket.
+      #
+      # payload            - the data, either IO or string
+      # additional_options - additional options for the put
+      #
+      def write(payload, additional_options = {})
+        options = {
+          :body => force_binary(payload)
+        }
+
+        options.merge!(additional_options) if additional_options
+
+        s3_object.put(options)
         nil
       end
 
