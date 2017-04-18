@@ -100,13 +100,28 @@ describe Blobby::S3Store, :integration => true do
 
       let(:key) { "data/file" }
       let(:content) { "CONTENT" }
+      let(:additional_options) { {} }
 
       before do
-        subject[key].write(content)
+        subject[key].write(content, additional_options)
       end
 
       it "stores stuff in S3" do
         expect(bucket.object(key).get.body.read).to eq(content)
+      end
+
+      context "with additional options" do
+
+        let(:additional_options) { { content_type: "application/pdf" } }
+
+        it "stores stuff in S3" do
+          expect(bucket.object(key).get.body.read).to eq(content)
+        end
+
+        it "stores the additional options" do
+          expect(bucket.object(key).get.content_type).to eq(additional_options[:content_type])
+        end
+
       end
 
     end
