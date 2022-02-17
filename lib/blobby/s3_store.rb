@@ -93,8 +93,8 @@ module Blobby
 
       def force_binary(s)
         return s unless s.respond_to?(:encoding)
-        return s if s.encoding.name == "ASCII-8BIT"
-        s.dup.force_encoding("ASCII-8BIT")
+        return s if s.encoding == Encoding::BINARY
+        s.b
       end
 
     end
